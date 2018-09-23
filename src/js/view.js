@@ -1,17 +1,36 @@
 
+
 module.exports = {
 
   showState(state) {
     const layout = document.querySelector('.layout');
     const app = document.querySelector('.main-wrapper__container');
+    const mapWrapper = document.getElementById('mapWrapper');
+    const btnCloseMap = document.querySelector('.map-wrapper__button-close');
+    const btnOpenMap = document.querySelector('.map-wrapper__button-open');
+    const mapContainer = document.getElementById('map');
 
     if (state == 1) {
       layout.style.display = 'block';
       app.style.display = 'block';
-    } else {
-      layout.style.display = 'none';
-      app.style.display = 'none';
+      mapWrapper.className = 'container__map-wrapper';
+      mapContainer.style.display = 'none';
+      btnCloseMap.style.display = 'none';
+      btnOpenMap.style.display = 'block';
+      return
+    } 
+    if (state == 2) {
+      layout.style.display = 'block';
+      app.style.display = 'block';
+      mapWrapper.className = 'container__map-active-wrapper';
+      mapContainer.style.display = 'flex';
+      btnCloseMap.style.display = 'block';
+      btnOpenMap.style.display = 'none';
+      return
     }
+
+    layout.style.display = 'none';
+    app.style.display = 'none';
   },
 
   insertFriends(friends) {

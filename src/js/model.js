@@ -1,5 +1,6 @@
 
 const View = require('./view')
+const moduleMap = require('./yaMap')
 
 module.exports = {
   stateOfApp: 0,
@@ -9,6 +10,7 @@ module.exports = {
     View.showState(this.stateOfApp)
   },
 
+  
   insertFromStorage() {
     // Вывести из хранилища если есть там что то
     if (localStorage.data) {
@@ -42,7 +44,21 @@ module.exports = {
 
       View.insertFriends(data.response)
       this.insertFromStorage()
+      this.filterFriends(data.response.items)
     })
+  },
+
+  filterFriends(friends){
+    friends.filter(friend => friend.city && friend.city.title)
+      .map(friend => {
+        let parts = friend.country.title
+
+        if(friend.city){
+          parts += ' ' + friend.city.title
+        }
+        return parts
+      })
+      .map(moduleMap.geocode)
   },
 
   saveToLocalStorage(object) {
@@ -62,5 +78,9 @@ module.exports = {
 
   isMatching(full, chunk) {
     return full.toUpperCase().indexOf(chunk.toUpperCase()) > -1;
+  },
+
+  initMap(){
+    moduleMap.init()
   }
 }

@@ -6,7 +6,7 @@ module.exports = {
   init() {
     Model.vkInit()
     Model.vkAuth()
-    Model.vkCallApi('friends.get', { fields: 'name,lastname,photo_100' })
+    Model.vkCallApi('friends.get', { fields: 'name,lastname,photo_100,country,city' })
 
     this.objectListener(document, 'click')
     this.objectListener(document, 'keyup')
