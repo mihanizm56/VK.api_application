@@ -6,8 +6,12 @@ module.exports = {
       })
   },
   
+
+
   createMap(){
     let myMap;
+    let myCollection;
+    
     console.log(`старт moduleMap`)
     myMap = new ymaps.Map('map', {
       center: [55.76, 37.64], // Москва
@@ -17,6 +21,9 @@ module.exports = {
       {
         searchControlProvider: 'yandex#search'
       });
+
+    myCollection = new ymaps.GeoObjectCollection();
+
     clusterer = new ymaps.Clusterer({
       preset: 'islands#invertedVioletClusterIcons',
       clusterDisableClickZoom: true,
@@ -24,21 +31,27 @@ module.exports = {
       geoObjectOpenBalloonOnClick: true
     });
     myMap.geoObjects.add(clusterer);
+    myMap.geoObjects.add(myCollection);
+
     console.log(`map is initialized`)
   },
 
-  geocode(address) {
+  insertPlaceMark(address) {
     return ymaps.geocode(address)
       .then(result => {
         const points = result.geoObjects.toArray();
         if (points.length) {
-          const coors = points[0].geometry.getCoordinates();
-          return coors
+          var coors = points[0].geometry.getCoordinates();
+          let placemark = new ymaps.Placemark([coors[0], coors[1]], {}, { preset: 'islands#invertedVioletClusterIcons' })
+          clusterer.add(placemark)
+          myCollection.add(placemark);
         }
       })
   },
 
-  createPlaceMark(latitude,longitude){
-    clusterer.add(new ymaps.Placemark([latitude, longitude], {}, { preset: 'islands#invertedVioletClusterIcons' }))
+  deleteAllPlaceMarks(){
+
+    clusterer.removeAll();
+    console.log('remove has done')
   }
 }

@@ -44,12 +44,13 @@ module.exports = {
       //console.log(selectedItems[i].dataset.map)
       const obj = {}
       obj.id = selectedItems[i].id;
-      obj.map = selectedItems[i].dataset.map;
+      obj.place = selectedItems[i].dataset.place;
 
       reestablish.push(obj)
     }
-    
+
     Model.saveToLocalStorage(reestablish)
+    Model.renderFriends()
   }
 }
 

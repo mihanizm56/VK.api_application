@@ -44,11 +44,28 @@ module.exports = {
       }
 
       View.insertFriends(data.response)
+      
       this.insertFromStorage()
-      //console.log('array of list friends')
-      //console.log(this.insertFromStorage())
-      this.filterFriends(data.response.items)
+      
+      this.renderFriends()
+      
+      console.log(data.response.items)
     })
+  },
+
+  renderFriends(){
+    const arrayOfFriends = this.insertFromStorage();
+
+    //moduleMap.deleteAllPlaceMarks()
+    moduleMap.deleteAllPlaceMarks()
+    arrayOfFriends.filter(friend => friend.place)
+      .map(friend => {
+        let parts = friend.place
+
+        return parts
+      })
+      .map(moduleMap.insertPlaceMark)
+
   },
 
   filterFriends(friends){
@@ -62,6 +79,10 @@ module.exports = {
         return parts
       })
       .map(moduleMap.geocode)
+  },
+
+  cleanLocalStorage(){
+    localStorage.data = ''
   },
 
   saveToLocalStorage(object) {
