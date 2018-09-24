@@ -19,7 +19,7 @@ module.exports = {
       });
     clusterer = new ymaps.Clusterer({
       preset: 'islands#invertedVioletClusterIcons',
-      clusterDisableClickZoom: false,
+      clusterDisableClickZoom: true,
       openBalloonOnClick: true,
       geoObjectOpenBalloonOnClick: true
     });
@@ -33,8 +33,12 @@ module.exports = {
         const points = result.geoObjects.toArray();
         if (points.length) {
           const coors = points[0].geometry.getCoordinates();
-          clusterer.add(new ymaps.Placemark([coors[0], coors[1]], {}, { preset: 'islands#invertedVioletClusterIcons' }))
+          return coors
         }
       })
+  },
+
+  createPlaceMark(latitude,longitude){
+    clusterer.add(new ymaps.Placemark([latitude, longitude], {}, { preset: 'islands#invertedVioletClusterIcons' }))
   }
 }

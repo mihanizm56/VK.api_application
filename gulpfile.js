@@ -90,7 +90,6 @@ gulp.task('scripts', function () {
 
 
 gulp.task('build', [
-  'clean',
   'html',
   'img',
   'css',

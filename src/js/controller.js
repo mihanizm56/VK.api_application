@@ -36,15 +36,20 @@ module.exports = {
   },
 
   saveList() {
-    const reestablish = {};
+    const reestablish = [];
+    
     const selectedItems = document.querySelector('.list-friends__list-item').children;
 
     for (let i = 0; i < selectedItems.length; i++) {
-      reestablish[i] = selectedItems[i].id;
+      //console.log(selectedItems[i].dataset.map)
+      const obj = {}
+      obj.id = selectedItems[i].id;
+      obj.map = selectedItems[i].dataset.map;
+
+      reestablish.push(obj)
     }
-
+    
     Model.saveToLocalStorage(reestablish)
-  },
-
+  }
 }
 

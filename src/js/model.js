@@ -16,6 +16,7 @@ module.exports = {
     if (localStorage.data) {
       const arrSelected = JSON.parse(localStorage.data);
       View.insertChoosenFriends(arrSelected)
+      return arrSelected
     }
   },
 
@@ -44,6 +45,8 @@ module.exports = {
 
       View.insertFriends(data.response)
       this.insertFromStorage()
+      //console.log('array of list friends')
+      //console.log(this.insertFromStorage())
       this.filterFriends(data.response.items)
     })
   },
@@ -62,7 +65,10 @@ module.exports = {
   },
 
   saveToLocalStorage(object) {
+    console.log('saved to storage')
+    
     localStorage.data = JSON.stringify(object);
+    console.log(localStorage.data)
   },
 
   renderList(arr = [], element) {

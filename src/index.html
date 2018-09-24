@@ -40,7 +40,7 @@
           <ul class="your-friends__list-item">
             <script id="user-template" type="text/x-handlebars-template">
                 {{#each items}}
-                  <li class="user-container" id="{{id}}">
+                  <li class="user-container" id="{{id}}" data-map="{{city.title}}">
                     <div class="user-container__left">
                       <img class="user-photo" src="{{photo_100}}" />
                       <p class="full-name">{{first_name}} {{last_name}}</p>

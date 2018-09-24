@@ -45,16 +45,21 @@ module.exports = {
   },
 
   saveList() {
-    const reestablish = {};
+    const reestablish = [];
+    
     const selectedItems = document.querySelector('.list-friends__list-item').children;
 
     for (let i = 0; i < selectedItems.length; i++) {
-      reestablish[i] = selectedItems[i].id;
+      //console.log(selectedItems[i].dataset.map)
+      const obj = {}
+      obj.id = selectedItems[i].id;
+      obj.map = selectedItems[i].dataset.map;
+
+      reestablish.push(obj)
     }
-
+    
     Model.saveToLocalStorage(reestablish)
-  },
-
+  }
 }
 
 
@@ -77,6 +82,7 @@ module.exports = {
     if (localStorage.data) {
       const arrSelected = JSON.parse(localStorage.data);
       View.insertChoosenFriends(arrSelected)
+      return arrSelected
     }
   },
 
@@ -105,6 +111,8 @@ module.exports = {
 
       View.insertFriends(data.response)
       this.insertFromStorage()
+      //console.log('array of list friends')
+      //console.log(this.insertFromStorage())
       this.filterFriends(data.response.items)
     })
   },
@@ -123,7 +131,10 @@ module.exports = {
   },
 
   saveToLocalStorage(object) {
+    console.log('saved to storage')
+    
     localStorage.data = JSON.stringify(object);
+    console.log(localStorage.data)
   },
 
   renderList(arr = [], element) {
@@ -240,9 +251,10 @@ module.exports = {
   },
 
   insertChoosenFriends(arrayOfFriends) {
-    for (let prop in arrayOfFriends) {
-      document.getElementById(arrayOfFriends[prop]).lastElementChild.classList = 'user-minus';
-      document.querySelector('.list-friends__list-item').appendChild(document.getElementById(arrayOfFriends[prop]));
+    
+    for (obj of arrayOfFriends){
+      document.getElementById(obj.id).lastElementChild.classList = 'user-minus';
+      document.querySelector('.list-friends__list-item').appendChild(document.getElementById(obj.id));
     }
   }
 }
@@ -269,7 +281,7 @@ module.exports = {
       });
     clusterer = new ymaps.Clusterer({
       preset: 'islands#invertedVioletClusterIcons',
-      clusterDisableClickZoom: false,
+      clusterDisableClickZoom: true,
       openBalloonOnClick: true,
       geoObjectOpenBalloonOnClick: true
     });
@@ -283,9 +295,13 @@ module.exports = {
         const points = result.geoObjects.toArray();
         if (points.length) {
           const coors = points[0].geometry.getCoordinates();
-          clusterer.add(new ymaps.Placemark([coors[0], coors[1]], {}, { preset: 'islands#invertedVioletClusterIcons' }))
+          return coors
         }
       })
+  },
+
+  createPlaceMark(latitude,longitude){
+    clusterer.add(new ymaps.Placemark([latitude, longitude], {}, { preset: 'islands#invertedVioletClusterIcons' }))
   }
 }
 },{}]},{},[1]);

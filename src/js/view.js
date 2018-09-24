@@ -91,9 +91,10 @@ module.exports = {
   },
 
   insertChoosenFriends(arrayOfFriends) {
-    for (let prop in arrayOfFriends) {
-      document.getElementById(arrayOfFriends[prop]).lastElementChild.classList = 'user-minus';
-      document.querySelector('.list-friends__list-item').appendChild(document.getElementById(arrayOfFriends[prop]));
+    
+    for (obj of arrayOfFriends){
+      document.getElementById(obj.id).lastElementChild.classList = 'user-minus';
+      document.querySelector('.list-friends__list-item').appendChild(document.getElementById(obj.id));
     }
   }
 }
