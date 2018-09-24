@@ -41,11 +41,12 @@ module.exports = {
     const selectedItems = document.querySelector('.list-friends__list-item').children;
 
     for (let i = 0; i < selectedItems.length; i++) {
-      //console.log(selectedItems[i].dataset.map)
+      
       const obj = {}
+      obj.name = selectedItems[i].dataset.name;
       obj.id = selectedItems[i].id;
       obj.place = selectedItems[i].dataset.place;
-
+      obj.photo = selectedItems[i].dataset.photo;
       reestablish.push(obj)
     }
 

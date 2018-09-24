@@ -5,7 +5,6 @@ module.exports = {
         this.createMap()
       })
   },
-  
 
 
   createMap(){
@@ -36,13 +35,22 @@ module.exports = {
     console.log(`map is initialized`)
   },
 
-  insertPlaceMark(address) {
-    return ymaps.geocode(address)
+  insertPlaceMark(name,place,photo) {
+    
+    return ymaps.geocode(place)
       .then(result => {
         const points = result.geoObjects.toArray();
         if (points.length) {
-          var coors = points[0].geometry.getCoordinates();
-          let placemark = new ymaps.Placemark([coors[0], coors[1]], {}, { preset: 'islands#invertedVioletClusterIcons' })
+          let coors = points[0].geometry.getCoordinates();
+          let placemark = new ymaps.Placemark(
+            [coors[0], coors[1]], 
+            {
+              balloonContentHeader: `${name}`,
+              balloonContentBody: `<h4>город ${place}</h4><img src='${photo}'/>`,
+              clusterCaption: `${name}`
+             
+            }, { preset: 'islands#invertedVioletClusterIcons' })
+          
           clusterer.add(placemark)
           myCollection.add(placemark);
         }

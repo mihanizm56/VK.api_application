@@ -69,6 +69,10 @@ body .main-wrapper {
   animation: fadeDownContainer 1s forwards;
 }
 
+.ymaps-2-1-68-balloon__layout{
+  width:400px;
+}
+
 .map-wrapper__button-close{
   display: none;
   position: absolute;

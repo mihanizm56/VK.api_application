@@ -56,16 +56,16 @@ module.exports = {
   renderFriends(){
     const arrayOfFriends = this.insertFromStorage();
 
-    //moduleMap.deleteAllPlaceMarks()
     moduleMap.deleteAllPlaceMarks()
-    arrayOfFriends.filter(friend => friend.place)
+
+    arrayOfFriends.filter(friend => friend.place && friend.name && friend.photo)
       .map(friend => {
-        let parts = friend.place
 
-        return parts
+        const arrayData = [friend.name, friend.place, friend.photo]
+
+        return arrayData
       })
-      .map(moduleMap.insertPlaceMark)
-
+      .map(array => moduleMap.insertPlaceMark(array[0], array[1], array[2]))
   },
 
   filterFriends(friends){
