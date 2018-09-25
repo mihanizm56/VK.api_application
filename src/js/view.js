@@ -1,7 +1,6 @@
 
 
 module.exports = {
-
   showState(state) {
     const layout = document.querySelector('.layout');
     const app = document.querySelector('.main-wrapper__container');
@@ -43,8 +42,6 @@ module.exports = {
   },
 
   changeItemIcon(event, zone = '', elem = '') {
-    console.log('changeItemIcon')
-    console.log(event.target.className)
     const element = event.target;
     const className = event.target.className;
 
@@ -72,7 +69,7 @@ module.exports = {
   },
 
   changePlaceItem(element) {
-
+    
     if (element.className == 'user-minus') {
       const listFriends = document.querySelector('.list-friends__list-item');
       return listFriends.appendChild(element.parentNode)

@@ -10,7 +10,6 @@ module.exports = {
     View.showState(this.stateOfApp)
   },
 
-  
   insertFromStorage() {
     // Вывести из хранилища если есть там что то
     if (localStorage.data) {
@@ -36,8 +35,8 @@ module.exports = {
   },
 
   vkCallApi(method, params) {
+    console.log('vkCallApi')
     params.v = '5.76';
-
     VK.api(method, params, (data) => {
       if (data.error) {
         throw new Error(data.error)
@@ -46,17 +45,17 @@ module.exports = {
       View.insertFriends(data.response)
       
       this.insertFromStorage()
-      
+
       this.renderFriends()
-      
-      console.log(data.response.items)
+      //console.log(data.response.items)
     })
   },
 
   renderFriends(){
-    const arrayOfFriends = this.insertFromStorage();
 
     moduleMap.deleteAllPlaceMarks()
+
+    const arrayOfFriends = this.insertFromStorage();
 
     arrayOfFriends.filter(friend => friend.place && friend.name && friend.photo)
       .map(friend => {
@@ -66,19 +65,6 @@ module.exports = {
         return arrayData
       })
       .map(array => moduleMap.insertPlaceMark(array[0], array[1], array[2]))
-  },
-
-  filterFriends(friends){
-    friends.filter(friend => friend.city && friend.city.title)
-      .map(friend => {
-        let parts = friend.country.title
-
-        if(friend.city){
-          parts += ' ' + friend.city.title
-        }
-        return parts
-      })
-      .map(moduleMap.geocode)
   },
 
   cleanLocalStorage(){
