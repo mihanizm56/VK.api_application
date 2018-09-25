@@ -13,9 +13,7 @@ module.exports = {
   insertFromStorage() {
     // Вывести из хранилища если есть там что то
     if (localStorage.data) {
-      const arrSelected = JSON.parse(localStorage.data);
-      View.insertChoosenFriends(arrSelected)
-      return arrSelected
+      return JSON.parse(localStorage.data)
     }
   },
 
@@ -43,20 +41,16 @@ module.exports = {
       }
 
       View.insertFriends(data.response)
-      
-      this.insertFromStorage()
+      View.insertChoosenFriends(this.insertFromStorage())
 
-      this.renderFriends()
-      //console.log(data.response.items)
+      this.renderPlacemarks(this.insertFromStorage())
     })
   },
 
-  renderFriends(){
-
+  renderPlacemarks(arrayOfFriends){
+    console.log('renderPlacemarks')
     moduleMap.deleteAllPlaceMarks()
-
-    const arrayOfFriends = this.insertFromStorage();
-
+    
     arrayOfFriends.filter(friend => friend.place && friend.name && friend.photo)
       .map(friend => {
 
@@ -73,9 +67,8 @@ module.exports = {
 
   saveToLocalStorage(object) {
     console.log('saved to storage')
-    
+
     localStorage.data = JSON.stringify(object);
-    console.log(localStorage.data)
   },
 
   renderList(arr = [], element) {
@@ -91,9 +84,5 @@ module.exports = {
 
   isMatching(full, chunk) {
     return full.toUpperCase().indexOf(chunk.toUpperCase()) > -1;
-  },
-
-  initMap(){
-    moduleMap.init()
   }
 }

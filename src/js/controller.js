@@ -50,7 +50,7 @@ module.exports = {
     }
 
     Model.saveToLocalStorage(reestablish)
-    Model.renderFriends()
+    Model.renderPlacemarks(Model.insertFromStorage())
   }
 }
 

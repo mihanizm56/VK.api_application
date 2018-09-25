@@ -38,23 +38,21 @@ module.exports = {
     const renderFriends = render(friends);
     const results = document.querySelector('.your-friends__list-item');
     results.innerHTML = renderFriends;
-
   },
 
   changeItemIcon(event, zone = '', elem = '') {
     const element = event.target;
-    const className = event.target.className;
 
-    if (className == 'user-plus') {
+    if (element.className == 'user-plus') {
       element.className = 'user-minus'
       return this.changePlaceItem(element)
     }
 
-    if (className == 'user-minus') {
+    if (element.className == 'user-minus') {
       element.className = 'user-plus'
       return this.changePlaceItem(element)
     }
-
+//для драг-н-дропа
     if (zone && elem) {
       if (zone == 'list-friends__list-item') {
         return elem.lastElementChild.className = 'user-plus'
@@ -71,25 +69,24 @@ module.exports = {
   changePlaceItem(element) {
     
     if (element.className == 'user-minus') {
-      const listFriends = document.querySelector('.list-friends__list-item');
-      return listFriends.appendChild(element.parentNode)
+      return document.querySelector('.list-friends__list-item').appendChild(element.parentNode)
     }
 
     if (element.className == 'user-plus') {
       const yourFriends = document.querySelector('.your-friends__list-item');
-      const parent = element.parentNode;
 
       if (yourFriends.childNodes) {
-        return yourFriends.insertBefore(parent, yourFriends.firstChild);
+        return yourFriends.insertBefore(element.parentNode, yourFriends.firstChild);
       }
 
       yourFriends.appendChild(parent);
     }
   },
 
-  insertChoosenFriends(arrayOfFriends) {
-    
-    for (obj of arrayOfFriends){
+  insertChoosenFriends(choosenFriends) {
+    console.log('insertChoosenFriends')
+
+    for (obj of choosenFriends){
       document.getElementById(obj.id).lastElementChild.classList = 'user-minus';
       document.querySelector('.list-friends__list-item').appendChild(document.getElementById(obj.id));
     }
