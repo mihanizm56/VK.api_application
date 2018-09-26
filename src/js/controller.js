@@ -1,9 +1,10 @@
 const Model = require('./model')
 const View = require('./view')
+const config = require('./config')
 
 module.exports = {
   init() {
-    Model.vkInit()
+    Model.vkInit(config.key)
     Model.vkAuth()
     Model.vkCallApi('friends.get', { fields: 'name,lastname,photo_100,country,city' })
 
@@ -35,7 +36,6 @@ module.exports = {
 
   saveList() {
     const selectedItems = document.querySelector('.list-friends__list-item').children;
-    console.log(selectedItems)
     const reestablish = [];
 
     for (let i = 0; i < selectedItems.length; i++) {

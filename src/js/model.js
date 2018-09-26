@@ -17,13 +17,13 @@ module.exports = {
     }
   },
 
-  vkInit() {
+  vkInit(key) {
     console.log('app started')
     VK.init({
-      apiId: 6669747
+      apiId: key
     })
   },
-
+  
   vkAuth() {
     VK.Auth.login(data => {
       if (!data.session) {
